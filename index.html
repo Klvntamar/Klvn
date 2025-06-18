@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Know Your Rights: An Interactive Guide for Nigerian Citizens</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Nigerian Civic Harmony -->
+    <!-- Application Structure Plan: A tab-based, single-page application structure was chosen to provide a non-linear, user-driven experience. Instead of forcing users to scroll through a long document, this design allows them to immediately navigate to their area of interest: "My Rights," "My Duties," "The Reality" (contextual challenges), or "Get Help" (actionable resources). This thematic organization, powered by interactive cards, breaks down complex constitutional information into digestible, engaging pieces, making it more accessible and useful than a direct replica of the report's structure. -->
+    <!-- Visualization & Content Choices: Report Info -> Rights/Duties lists. Goal -> Organize & Inform. Viz/Method -> Interactive HTML/CSS cards. Interaction -> Click to expand/collapse. Justification -> Manages information density and encourages exploration. | Report Info -> Gap between law and practice. Goal -> Compare & Explain. Viz/Method -> HTML/CSS "Tension" diagram. Interaction -> Static visual. Justification -> Provides a quick, powerful metaphor for the report's core conclusion without needing complex charts for non-numeric data. | Report Info -> Institutional contacts. Goal -> Enable Action. Viz/Method -> HTML/CSS contact cards. Interaction -> Click-to-copy contact info. Justification -> Adds practical utility for the user. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9FAFB;
+        }
+        .active-tab {
+            border-bottom-color: #166534;
+            color: #166534;
+            font-weight: 600;
+        }
+        .tab {
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .card.open .card-content {
+            max-height: 1000px;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .card.open .arrow {
+            transform: rotate(180deg);
+        }
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-green-800">The Nigerian Citizen's Handbook</h1>
+            <p class="text-lg text-gray-600 mt-2">An Interactive Guide to Your Constitutional Rights & Duties</p>
+        </header>
+
+        <nav class="sticky top-0 bg-gray-50/80 backdrop-blur-sm z-10 mb-8 border-b border-gray-200">
+            <div class="flex justify-center space-x-4 md:space-x-8">
+                <button data-target="rights" class="tab py-4 px-2 md:px-4 text-sm md:text-base text-gray-600 hover:text-green-700 active-tab">My Rights</button>
+                <button data-target="duties" class="tab py-4 px-2 md:px-4 text-sm md:text-base text-gray-600 hover:text-green-700">My Duties</button>
+                <button data-target="reality" class="tab py-4 px-2 md:px-4 text-sm md:text-base text-gray-600 hover:text-green-700">The Reality</button>
+                <button data-target="help" class="tab py-4 px-2 md:px-4 text-sm md:text-base text-gray-600 hover:text-green-700">Get Help</button>
+            </div>
+        </nav>
+
+        <main>
+            <section id="rights" class="content-section active">
+                <div class="text-center mb-8 p-4 bg-white rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Your Fundamental Human Rights</h2>
+                    <p class="text-gray-600 max-w-3xl mx-auto">Chapter IV of the 1999 Constitution of Nigeria guarantees every citizen certain fundamental rights. These are protections you are entitled to by law. Click on each right to learn more about what it means and the challenges to its enforcement.</p>
+                </div>
+                <div id="rights-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+            </section>
+
+            <section id="duties" class="content-section">
+                 <div class="text-center mb-8 p-4 bg-white rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Your Duties and Obligations</h2>
+                    <p class="text-gray-600 max-w-3xl mx-auto">With rights come responsibilities. Section 24 of the Constitution outlines the duties of every Nigerian citizen, which are essential for national unity, progress, and order. Click on each duty to understand its scope and the context surrounding it.</p>
+                </div>
+                <div id="duties-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+            </section>
+
+            <section id="reality" class="content-section">
+                <div class="text-center mb-8 p-4 bg-white rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">The Reality: Challenges & Gaps</h2>
+                    <p class="text-gray-600 max-w-3xl mx-auto">While the Constitution provides a strong framework for rights and duties, the reality on the ground is complex. This section explores the persistent gap between law and practice, highlighting the key challenges that affect the daily lives of citizens.</p>
+                </div>
+                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="p-6 bg-white rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold text-red-700 mb-3">The Rights vs. Reality Tension</h3>
+                        <p class="text-gray-600 mb-4">A significant gap exists between the rights guaranteed "in law" and their practical application "in practice." This tension is a central theme in Nigeria's human rights story.</p>
+                        <div class="relative p-4 border-2 border-dashed rounded-lg">
+                            <div class="flex justify-between items-center text-lg font-bold">
+                                <span class="text-green-700">IN LAW</span>
+                                <div class="flex-1 h-px bg-gray-300 mx-4"></div>
+                                <span class="text-red-700">IN PRACTICE</span>
+                            </div>
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl font-extrabold text-gray-300 opacity-80 z-0">&harr;</div>
+                            <div class="mt-4 grid grid-cols-2 gap-4 relative z-10">
+                                <div class="text-left">
+                                    <h4 class="font-semibold text-green-700">Constitutional Promise</h4>
+                                    <ul class="list-disc list-inside text-sm text-gray-600 mt-1">
+                                        <li>Robust legal framework</li>
+                                        <li>Clearly defined rights</li>
+                                        <li>Judicial system for redress</li>
+                                    </ul>
+                                </div>
+                                <div class="text-right">
+                                    <h4 class="font-semibold text-red-700">Lived Experience</h4>
+                                    <ul class="list-disc list-inside text-sm text-gray-600 mt-1">
+                                        <li>Enforcement gaps</li>
+                                        <li>Corruption & poverty</li>
+                                        <li>State security abuses</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 bg-white rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold mb-3">Poverty & Access to Justice</h3>
+                        <p class="text-gray-600">Poverty is a major barrier, making many rights "mythical" for citizens who cannot afford legal representation or basic necessities. The non-justiciability of socio-economic rights (like the right to shelter or food) means courts cannot enforce them, rendering the "Right to Life" less meaningful for those in deep poverty.</p>
+                    </div>
+
+                     <div class="p-6 bg-white rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold mb-3">Crackdowns on Dissent</h3>
+                        <p class="text-gray-600">Freedom of Expression and Assembly faces constant threats. The misuse of the Cybercrime Act to silence online critics, harassment of journalists, and violent suppression of protests like the #EndSARS movement create a chilling effect on civic participation, despite constitutional guarantees.</p>
+                    </div>
+
+                    <div class="p-6 bg-white rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold mb-3">Fragmented Judicial Landscape</h3>
+                        <p class="text-gray-600">There can be conflicting legal interpretations. For instance, the ECOWAS Court has struck down local blasphemy laws as incompatible with international human rights standards, while Nigeria's Supreme Court has upheld the constitutionality of the death penalty. This shows a complex legal environment where rights protections can vary.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="help" class="content-section">
+                <div class="text-center mb-8 p-4 bg-white rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Pathways for Redress & Support</h2>
+                    <p class="text-gray-600 max-w-3xl mx-auto">If your rights have been violated, or if you need legal assistance, there are official bodies created to help. These institutions offer avenues for investigation, legal aid, and lodging complaints against government actions.</p>
+                </div>
+                 <div id="help-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                 </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-12 pt-6 border-t border-gray-200">
+            <p class="text-sm text-gray-500">&copy; 2024. Information compiled from the "Fundamental Human Rights, Obligations, and Duties" report.</p>
+            <p class="text-xs text-gray-400 mt-1">This guide is for informational purposes only and does not constitute legal advice.</p>
+        </footer>
+    </div>
+
+    <script>
+        const rightsData = [
+            { title: "Right to Life", section: "S.33", description: "Protects you from being intentionally deprived of your life, except by a lawful court sentence.", analysis: "Challenges include extrajudicial killings by security forces and the debate over the death penalty's place in modern society." },
+            { title: "Right to Dignity", section: "S.34", description: "Protects you from torture, inhuman or degrading treatment, slavery, and forced labour.", analysis: "Police brutality and poor prison conditions are major areas where this right is violated." },
+            { title: "Right to Personal Liberty", section: "S.35", description: "Guarantees freedom from arbitrary arrest or detention. You can only be deprived of liberty through lawful procedure.", analysis: "Illegal detentions and holding suspects beyond the constitutionally stipulated time are common issues." },
+            { title: "Right to Fair Hearing", section: "S.36", description: "Entitles you to a fair and public hearing by an impartial court within a reasonable time.", analysis: "Judicial delays, corruption, and lack of access to legal representation for the poor undermine this right." },
+            { title: "Right to Private & Family Life", section: "S.37", description: "Protects the privacy of your home, correspondence, phone calls, and other communications.", analysis: "Concerns exist about government surveillance and the misuse of data, especially under laws like the Cybercrime Act." },
+            { title: "Right to Freedom of Thought, Conscience & Religion", section: "S.38", description: "Allows you to hold, change, and practice your religion or belief.", analysis: "Religious tensions and blasphemy laws (especially at the state level) create conflicts with this fundamental right, as seen in the ECOWAS court ruling." },
+            { title: "Right to Freedom of Expression", section: "S.39", description: "Grants you the freedom to hold opinions and to share ideas and information without interference.", analysis: "This right is heavily contested, with crackdowns on journalists, activists, and protesters (e.g., #EndSARS), and the use of laws to stifle dissent." },
+            { title: "Right to Peaceful Assembly & Association", section: "S.40", description: "Allows you to gather freely with others and to form or belong to associations like political parties or trade unions.", analysis: "Authorities often restrict protests and gatherings, citing security concerns, which clashes with this right." },
+            { title: "Right to Freedom of Movement", section: "S.41", description: "Allows you to move freely throughout Nigeria and to reside in any part of the country.", analysis: "Informal checkpoints, curfews in conflict zones, and inter-communal clashes can restrict this right." },
+            { title: "Right to Freedom from Discrimination", section: "S.42", description: "Prohibits discrimination based on your ethnic group, place of origin, sex, religion, or political opinion.", analysis: "Despite this guarantee, ethnic and religious profiling and discrimination (e.g., 'indigene vs. settler' issues) remain significant social problems." },
+            { title: "Right to Own Property", section: "S.43/44", description: "Grants every citizen the right to acquire and own property anywhere in Nigeria. Compulsory acquisition by the state requires due process and compensation.", analysis: "Disputes over land ownership, forced evictions, and inadequate compensation for acquired property are frequent challenges." }
+        ];
+
+        const dutiesData = [
+            { title: "Abide by the Constitution", section: "S.24(a)", description: "You must respect the Constitution, its ideals, national symbols (flag, anthem), and legitimate authorities.", analysis: "The duty to respect 'legitimate authorities' creates a tension with the right to criticize government actions, especially amidst widespread corruption." },
+            { title: "Enhance Nigeria's Image", section: "S.24(b)", description: "You have a duty to help enhance Nigeria's power, prestige, and good name, and render national service if required.", analysis: "This patriotic duty is often undermined by government corruption, which tarnishes the nation's image more than any citizen's actions could." },
+            { title: "Respect Rights of Others", section: "S.24(c)", description: "You must respect the dignity and rights of other citizens and live in unity and harmony.", analysis: "This is the foundation of social cohesion, but it is challenged by ethnic and religious intolerance in many communities." },
+            { title: "Contribute to Community", section: "S.24(d)", description: "You should make positive and useful contributions to the progress and wellbeing of your community.", analysis: "This encourages active citizenship and local development, forming the bedrock of grassroots progress." },
+            { title: "Assist Law Enforcement", section: "S.24(e)", description: "You are obligated to assist lawful agencies in maintaining law and order.", analysis: "A deep trust deficit, caused by police brutality and corruption, makes citizens hesitant to cooperate with security agencies, hindering this duty." },
+            { title: "Declare Income & Pay Taxes", section: "S.24(f)", description: "You must declare your income honestly and pay your taxes promptly.", analysis: "Tax evasion is a major problem, but citizens often question paying taxes when public services are poor and corruption is rampant." }
+        ];
+
+        const helpData = [
+            { name: "National Human Rights Commission (NHRC)", function: "Promotes, protects, and enforces human rights. Investigates alleged violations and seeks redress for victims.", contact: { phone: "08006472428", email: "info@nhrc.gov.ng", web: "www.nigeriarights.gov.ng", address: "No 19 Aguiyi Ironsi Street, Maitama, Abuja" } },
+            { name: "Legal Aid Council (LAC)", function: "Provides free legal aid and services to indigent Nigerians who cannot afford a lawyer, especially for human rights breaches.", contact: { phone: "N/A", email: "info@legalaidcouncil.gov.ng", web: "www.legalaidcouncil.gov.ng", address: "No.22 Port Harcourt Crescent, Area 11, Garki, Abuja" } },
+            { name: "Public Complaints Commission (PCC)", function: "Investigates complaints from citizens about administrative injustices by government agencies, companies, or their officials.", contact: { phone: "08035400172", email: "N/A", web: "pcc.gov.ng", address: "25 Aguiyi Ironsi St, Wuse, Abuja" } }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const rightsGrid = document.getElementById('rights-grid');
+            const dutiesGrid = document.getElementById('duties-grid');
+            const helpGrid = document.getElementById('help-grid');
+            
+            rightsData.forEach(item => rightsGrid.innerHTML += createCard(item));
+            dutiesData.forEach(item => dutiesGrid.innerHTML += createCard(item));
+            helpData.forEach(item => helpGrid.innerHTML += createHelpCard(item));
+
+            const tabs = document.querySelectorAll('.tab');
+            const sections = document.querySelectorAll('.content-section');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.dataset.target;
+
+                    tabs.forEach(t => t.classList.remove('active-tab'));
+                    tab.classList.add('active-tab');
+
+                    sections.forEach(section => {
+                        if (section.id === target) {
+                            section.classList.add('active');
+                        } else {
+                            section.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            document.body.addEventListener('click', function(e) {
+                if (e.target.closest('.card')) {
+                    const card = e.target.closest('.card');
+                    if (card) {
+                        card.classList.toggle('open');
+                    }
+                }
+                if (e.target.matches('.copy-btn')) {
+                    const btn = e.target;
+                    const textToCopy = btn.dataset.copy;
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        const originalText = btn.innerHTML;
+                        btn.innerHTML = 'Copied!';
+                        btn.classList.add('bg-green-600');
+                        setTimeout(() => {
+                            btn.innerHTML = originalText;
+                            btn.classList.remove('bg-green-600');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+                }
+            });
+        });
+
+        function createCard(item) {
+            return `
+                <div class="card p-4">
+                    <div class="flex justify-between items-center">
+                        <div class="flex-1">
+                            <span class="text-xs font-semibold text-green-700 bg-green-100 px-2 py-1 rounded-full">${item.section}</span>
+                            <h3 class="text-lg font-semibold mt-2">${item.title}</h3>
+                        </div>
+                        <div class="arrow text-2xl text-gray-400">
+                           &#9660;
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="border-t pt-4 mt-4">
+                            <p class="text-gray-600">${item.description}</p>
+                            <div class="mt-3 p-3 bg-red-50 border-l-4 border-red-500 rounded-r-lg">
+                                <h4 class="font-semibold text-sm text-red-800">In Practice:</h4>
+                                <p class="text-sm text-red-700">${item.analysis}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function createHelpCard(item) {
+             return `
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col">
+                    <h3 class="text-xl font-bold text-green-800">${item.name}</h3>
+                    <p class="text-gray-600 mt-2 mb-4 flex-grow">${item.function}</p>
+                    <div class="space-y-3 text-sm border-t pt-4 mt-auto">
+                        ${item.contact.address ? `<div class="flex items-start"><span class="mt-1 mr-3 text-green-700">&#127968;</span><span>${item.contact.address}</span></div>` : ''}
+                        ${item.contact.phone !== 'N/A' ? `<div class="flex items-center"><span class="mr-3 text-green-700">&#128222;</span><span>${item.contact.phone}</span><button class="copy-btn ml-auto text-xs bg-gray-200 hover:bg-green-500 hover:text-white px-2 py-1 rounded" data-copy="${item.contact.phone}">Copy</button></div>` : ''}
+                        ${item.contact.email !== 'N/A' ? `<div class="flex items-center"><span class="mr-3 text-green-700">&#9993;&#65039;</span><span class="truncate">${item.contact.email}</span><button class="copy-btn ml-auto text-xs bg-gray-200 hover:bg-green-500 hover:text-white px-2 py-1 rounded" data-copy="${item.contact.email}">Copy</button></div>` : ''}
+                        ${item.contact.web ? `<div class="flex items-center"><span class="mr-3 text-green-700">&#127760;</span><a href="https://${item.contact.web}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline truncate">${item.contact.web}</a></div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+
+</body>
+</html>
